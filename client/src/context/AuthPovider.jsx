@@ -27,7 +27,6 @@ const AuthProvider = ({children}) => {
             try {
                 const { data } = await plannerAxios(`/profile`, config)
                 setAuth(data)
-                console.log(data)
                 
             } catch (error) {
                 console.log(error);

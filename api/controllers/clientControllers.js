@@ -13,14 +13,14 @@ const agregarCliente = async(req, res) => {
 }
 
 const obtenerClientes = async (req, res) => {
-    console.log(req.planner);
+   
     const clientes = await Clients.find().where('eventPlanner').equals(req.planner) 
-    console.log(clientes)
+ 
     return res.json(clientes)
 }   
 
 const obtenerCliente = async (req, res) => {
-    console.log(req)
+
     const { id } = req.params;
     const cliente = await Clients.findById(id)
     if(!cliente){
@@ -59,7 +59,7 @@ const actualizarCliente = async (req, res) => {
 const eliminarCliente = async (req, res) => {
     const { id } = req.params;
     const cliente = await Clients.findById(id)
-    console.log(cliente)
+    
 
     if(!cliente){
         return res.status(404).json({ msg: 'Cliente no encontrado'})

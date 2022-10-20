@@ -1,19 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Alerta from './Alerta';
-import { clientAxios } from '../config/axios';
 import useClientes from '../hooks/useClientes';
 
 function Formulario() {
 
-    const { clientes, guardarCliente } = useClientes();
+    const { cliente, guardarCliente } = useClientes();
     const [input, setInput] = useState({
         name: '',
         eventoTipo: '',
         fechaEvento: '',
         telefono:'',
         email: '',
-        total: ''
+        total: '',
+        _id: null
     });
+
+    useEffect(() => {
+        if(cliente?._id){
+            setInput({
+                name: cliente.name,
+                eventoTipo: cliente.eventoTipo,
+                fechaEvento: cliente.fechaEvento,
+                telefono:cliente.telefono,
+                email: cliente.email,
+                total: cliente.total,
+                _id: cliente._id
+            })
+        }
+    }, [cliente])
 
     const [alerta, setAlerta] = useState({})
     const { msg } = alerta
@@ -49,7 +63,7 @@ function Formulario() {
             fechaEvento: '',
             telefono:'',
             email: '',
-            total: ''
+            total: '',
         })
     }
 
@@ -174,7 +188,7 @@ function Formulario() {
 
             <input
                 type="submit"
-                value="Agregar evento"
+                value={input._id ? "Guardar cambios" : "Agregar evento"}
                 className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transitions-colors rounded-sm"
             />
         </form>

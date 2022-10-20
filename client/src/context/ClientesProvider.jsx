@@ -6,6 +6,7 @@ const ClientesContext = createContext()
 export const ClientesProvider = ({children}) => {
 
     const [clientes, setClientes] = useState([]);
+    const [cliente, setCliente] = useState({});
 
     useEffect(() => {
         const obtenerClientes = async () => {
@@ -29,15 +30,31 @@ export const ClientesProvider = ({children}) => {
         obtenerClientes();
     }, [])
 
+    //GUARDAR O EDITAR UN CLIENTE
     const guardarCliente = async(cliente) =>{
-        try {
-            const token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             }
+        }
+        if(cliente._id) {
+            //editando
+            try {
+                const { data } = await clientAxios.put(`/${cliente._id}`, cliente, config)
+                const clientesActualizado = clientes.map(clienteState => clienteState._id === data._id ? data : clienteState)
+
+                setClientes(clientesActualizado)
+                
+            } catch (error) {
+                console.log(error)
+            }
+
+        }else{
+            //nuevo
+             try {
+
             const { data } = await clientAxios.post('/', cliente, config)
             const { createdAt, updatedAt, __v, ...clienteAlmacenado } = data
             setClientes([
@@ -47,11 +64,35 @@ export const ClientesProvider = ({children}) => {
 
         } catch (error) {
             console.log(error.response)
+            }
         }
+       
     }
 
-    const setEdicion = (id) => {
-        console.log('editando' , id)
+    const setEdicion = (paciente) => {
+        setCliente(paciente)
+    }
+
+    const eliminarCliente = async(id) => {
+       
+        const confirmar = confirm('Estás seguro que deseas eliminar el registro?')
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        try {
+            if(confirmar) {
+                const { data } = await clientAxios.delete(`/${id}`, config)
+                const clientesACtualizados = clientes.filter(clientesState => clientesState._id !== id )
+                setClientes(clientesACtualizados)
+             }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return(
@@ -59,7 +100,9 @@ export const ClientesProvider = ({children}) => {
         value={{
             clientes,
             guardarCliente,
-            setEdicion
+            setEdicion,
+            cliente,
+            eliminarCliente
         }}
         >
             {children}

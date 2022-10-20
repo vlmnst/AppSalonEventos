@@ -3,7 +3,7 @@ import useClientes from "../hooks/useClientes"
 function Cliente({ cliente }) {
   const { _id, name, email, telefono, eventoTipo, fechaEvento, total } = cliente
 
-  const { setEdicion } = useClientes();
+  const { setEdicion, eliminarCliente } = useClientes();
 
 
   return (
@@ -28,13 +28,14 @@ function Cliente({ cliente }) {
       </p>
       <div className="flex justify-between my-5">
         <button 
-          onClick={() => setEdicion(_id)}
+          onClick={() => setEdicion(cliente)}
           type="button"
           className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white uppercase font-bold rounded-lg "
           >
           Editar
         </button>
         <button 
+          onClick={() => eliminarCliente(_id)}
           type="button"
           className="py-2 px-10 bg-red-700 hover:bg-indigo-700 text-white uppercase font-bold rounded-lg "
           >

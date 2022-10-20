@@ -59,7 +59,7 @@ function NewPassword() {
 
     try {
       const newPass = await plannerAxios.post(`/forget-password/${token}`, {password: input.password})
-      console.log(newPass)
+  
       setAlerta({
         msg: newPass.data.msg,
         error: false

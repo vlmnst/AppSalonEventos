@@ -42,7 +42,6 @@ function Register() {
         error: false
       })
     } catch (error) {
-      console.log(error.response.data)
       setAlerta({
         msg: error.response.data.error,
         error: true

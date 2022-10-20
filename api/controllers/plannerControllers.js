@@ -67,7 +67,7 @@ const confirmar = async ( req, res ) => {
     const { token } = req.params
     try {
         const usuarioConfirmar = await EventPlanner.findOne({ token })
-        console.log('usuario identificado por token',usuarioConfirmar)
+        
         if(!usuarioConfirmar){
             const error = new Error('Token no valido')
             return res.status(400).json( { error: error.message } )

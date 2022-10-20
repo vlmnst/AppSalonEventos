@@ -11,7 +11,6 @@ function ForgetPassword() {
     e.preventDefault();
     try {
       const { data } = await plannerAxios.post(`/forget-password`, { input });
-      console.log(data)
       setAlerta({
         msg: data.msg,
         error: false
