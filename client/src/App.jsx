@@ -7,6 +7,8 @@ import Register from "./paginas/Register.jsx";
 import NewPassword from "./paginas/NewPassword";
 import RutaProtegida from "./layout/RutaProtegida";
 import AdministrarEventos from "./paginas/AdministrarEventos";
+import Perfil from "./paginas/Perfil";
+import CambiarPassword from "./paginas/CambiarPassword";
 
 import { AuthProvider } from "./context/AuthPovider";
 import { ClientesProvider } from "./context/ClientesProvider"
@@ -30,6 +32,8 @@ function App() {
 
         <Route path='/admin' element={ <RutaProtegida/> }>
           <Route index element={ <AdministrarEventos/> } />
+          <Route path="perfil" element={ <Perfil/> } />
+          <Route path="cambiar-password" element={ <CambiarPassword/> } />
         </Route>
 
       </Routes>

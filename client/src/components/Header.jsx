@@ -12,7 +12,7 @@ function Header() {
             </h1>
             <nav className="flex felx-col lg:flex-row gap-4 mt-5 lg:mt-0">
                 <Link to='/admin' className="text-white text-xs uppercase font-bold">Clientes</Link>
-                <Link to='/admin' className="text-white text-xs uppercase font-bold">Perfil</Link>
+                <Link to='/admin/perfil' className="text-white text-xs uppercase font-bold">Perfil</Link>
 
                 <button 
                     type='button' 

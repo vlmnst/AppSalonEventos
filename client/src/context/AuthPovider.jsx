@@ -39,6 +39,53 @@ const AuthProvider = ({children}) => {
         autenticarUsuario();
     }, [])
 
+    const actualizarPerfil = async (datos) => {
+        const token = localStorage.getItem('token')
+        const config = {
+            headers: {
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await plannerAxios.put(`/editar-perfil/${datos.id}`, datos, config)
+            setAuth( data )
+            return {
+                msg: 'Modificado correctamente',
+                error: false
+            }
+        } catch (error) {
+            return { 
+                msge: error.response.data.msg,
+                error: true
+            }
+        }
+
+    }
+
+    const guardarPassword = async(datos) => {
+        const token = localStorage.getItem('token')
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        };
+        try {
+           const { data } = await plannerAxios.put(`/cambiar-password`, datos, config) 
+            return data
+        } catch (error) {
+            return { 
+                msg: error.response.data.error,
+                error: true
+            }
+        }
+        
+        
+    }
+
     const cerrarSesion = () => {
         localStorage.removeItem('token')
         setAuth({})
@@ -49,7 +96,9 @@ const AuthProvider = ({children}) => {
             auth,
             setAuth,
             cargando,
-            cerrarSesion
+            cerrarSesion,
+            actualizarPerfil,
+            guardarPassword
         }}>
             {children}
         </AuthContext.Provider>

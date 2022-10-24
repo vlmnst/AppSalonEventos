@@ -55,6 +55,8 @@ const autenticar = async ( req, res ) => {
             _id: usuario._id,
             name: usuario.name,
             email: usuario.email,
+            telefono: usuario.telefono || "",
+            salon: usuario.salon || "",
             token: generarJWT(usuario.id)
          })
     }else{
@@ -148,6 +150,53 @@ const newPass = async (req, res) => {
     }
 }
 
+const editarPerfil = async (req, res) => {
+    const { id } = req.params
+    const { name, email, telefono, salon } = req.body
+    const planner = await EventPlanner.findById(id);
+
+    if(!id) res.status(400).json({error : 'Usuario no existe'})
+
+    if(email !== planner.email) {
+        const existeEmail =  await EventPlanner.findOne({ email })
+        if(existeEmail){
+            const error = new Error("Ese email ya está en uso")
+            return res.status(400).json({msg: error.message})
+        }
+    }
+
+    try {
+        planner.name = name || planner.name;
+        planner.email = email || planner.email;
+        planner.telefono = telefono || planner.telefono;
+        planner.salon = salon || planner.salon;
+        const plannerActualizado = await planner.save();
+        return res.json(plannerActualizado)
+   } catch (error) {
+       console.log(error)
+   }
+}
+
+const actualizarPassword = async (req, res) => {
+    const { passwordActual,  passwordNuevo } = req.body;
+    const { _id } = req.planner;
+
+    const planner = await EventPlanner.findById(_id)
+    if(!planner) {
+        const error = new Error("Hubo un error")
+        return res.status(400).json({error: error.message})
+    }
+
+    if( await planner.comprobarPassword(passwordActual)){
+        planner.password = passwordNuevo
+        await planner.save();
+        return res.json({msg: 'Tu password se ha modificado correctamente'})
+    } else {
+        const error = new Error("El password actual es incorrecto")
+        return res.status(400).json({error: error.message})
+    }
+
+}
 
 export {
     registrar,
@@ -156,5 +205,7 @@ export {
     profile,
     forgetPassword,
     checkToken,
-    newPass
+    newPass,
+    editarPerfil,
+    actualizarPassword
 }

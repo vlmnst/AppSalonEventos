@@ -5,7 +5,10 @@ import { registrar,
          profile,
          forgetPassword,
          checkToken,
-         newPass } from "../controllers/plannerControllers.js";
+         newPass,
+         editarPerfil,
+         actualizarPassword
+         } from "../controllers/plannerControllers.js";
 import checkAuth from "../middleware/auth.js";
 const router = express.Router();
 
@@ -20,6 +23,10 @@ router.post('/registrar', registrar );
 router.post('/login', autenticar );
 router.post('/forget-password/:token', newPass);
 router.post('/forget-password', forgetPassword);
+
+//PUT
+router.put('/editar-perfil/:id', checkAuth, editarPerfil);
+router.put('/cambiar-password', checkAuth, actualizarPassword);
 
 
 

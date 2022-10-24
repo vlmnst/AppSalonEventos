@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {plannerAxios} from "../config/axios";
+import { plannerAxios } from "../config/axios";
 import Alerta from "../components/Alerta";
 
 function ForgetPassword() {

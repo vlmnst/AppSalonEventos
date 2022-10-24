@@ -75,10 +75,12 @@ const eliminarCliente = async (req, res) => {
     }
 }
 
+
+
 export {
     agregarCliente,
     obtenerClientes,
     obtenerCliente,
     actualizarCliente,
-    eliminarCliente
+    eliminarCliente,
 }

@@ -6,6 +6,7 @@ function Register() {
   const [ input, setInput ] = useState({
     name: '',
     email: '',
+    salon: '',
     password: '',
     repetirPassword: ''
   });
@@ -21,6 +22,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if([input.nombre, input.email, input.password, input.repetirPassword].includes('')){
       setAlerta({ msg: 'Hay campos vacios', error: true })
       return
@@ -36,7 +38,11 @@ function Register() {
     setAlerta('')
     //Crear el usuario
     try {
-      await plannerAxios.post(`/registrar`, {email: input.email, name: input.name, password: input.password })
+      await plannerAxios.post(`/registrar`, {
+        email: input.email, 
+        name: input.name, 
+        salon: input.salon,
+        password: input.password })
       setAlerta({
         msg: `${input.name} tu usuario se ha creado correctamente, revisa tu email`,  
         error: false
@@ -47,6 +53,13 @@ function Register() {
         error: true
       })
     }
+    setInput({
+      name: '',
+      email: '',
+      salon: '',
+      password: '',
+      repetirPassword: ''
+    })
   }
 
   const { msg } = alerta
@@ -93,6 +106,20 @@ function Register() {
                   className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
                   name="email"
                   value={input.email}
+                  onChange={ e => changeInput(e)}
+                  />
+              </div>
+              <div className="my-5">
+                <label
+                  className="uppercase text-gray-600 text-1xl font-bold">
+                  Nombre del Salón 
+                </label>
+                <input 
+                  type="salon"
+                  placeholder="Ingresa el nombre del salón de eventos"
+                  className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+                  name="salon"
+                  value={input.salon}
                   onChange={ e => changeInput(e)}
                   />
               </div>

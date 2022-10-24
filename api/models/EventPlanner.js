@@ -23,6 +23,11 @@ const eventPlannerSchema = mongoose.Schema({
         default: null,
         trim: true
     },
+    salon: {
+        type: String,
+        required: true,
+        trim: true
+    },
     token: {
         type: String,
         default: generarId()
