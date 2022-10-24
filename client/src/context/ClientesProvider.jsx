@@ -24,14 +24,17 @@ export const ClientesProvider = ({children}) => {
                 const { data } = await clientAxios('/', config)
                 setClientes( data )
             } catch (error) {
-                console.log(error.response)
+                console.log(error)
             }
         }
         obtenerClientes();
-    }, [])
+    }, [cliente])
 
     //GUARDAR O EDITAR UN CLIENTE
     const guardarCliente = async(cliente) =>{
+
+        console.log(cliente._id)
+
         const token = localStorage.getItem('token');
         const config = {
             headers: {
@@ -44,7 +47,7 @@ export const ClientesProvider = ({children}) => {
             try {
                 const { data } = await clientAxios.put(`/${cliente._id}`, cliente, config)
                 const clientesActualizado = clientes.map(clienteState => clienteState._id === data._id ? data : clienteState)
-
+                console.log(clientesActualizado)
                 setClientes(clientesActualizado)
                 
             } catch (error) {

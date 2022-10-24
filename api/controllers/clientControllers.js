@@ -1,9 +1,12 @@
 import Clients from "../models/Clients.js";
 
 const agregarCliente = async(req, res) => {
-    const client = new Clients( req.body );
-    client.eventPlanner = req.planner._id
+
     try {
+        const client = new Clients( req.body );
+     
+        client.eventPlanner = await  req.planner._id
+
         const clientSave = await client.save();
         return res.json(clientSave);
     } catch (error) {
@@ -13,10 +16,14 @@ const agregarCliente = async(req, res) => {
 }
 
 const obtenerClientes = async (req, res) => {
-   
-    const clientes = await Clients.find().where('eventPlanner').equals(req.planner) 
- 
+   try {
+        const clientes = await Clients.find().where('eventPlanner').equals(req.planner) 
+    console.log(clientes);
     return res.json(clientes)
+   } catch (error) {
+    console.log(error)
+   }
+
 }   
 
 const obtenerCliente = async (req, res) => {
@@ -36,7 +43,7 @@ const obtenerCliente = async (req, res) => {
 
 const actualizarCliente = async (req, res) => {
     const { id } = req.params;
-    const { name, email, telefono, fecha } = req.body
+    const { name, email, telefono, fecha, total } = req.body
     const cliente = await Clients.findById(id)
     if(!cliente){
         return res.status(404).json({ msg: 'Cliente no encontrado'})
@@ -49,6 +56,8 @@ const actualizarCliente = async (req, res) => {
          cliente.email = email || cliente.email;
          cliente.telefono = telefono || cliente.telefono;
          cliente.fecha = fecha || cliente.fecha;
+         cliente.total = total || cliente.total;
+
          const clienteActualizado = await cliente.save();
          return res.json(clienteActualizado)
     } catch (error) {

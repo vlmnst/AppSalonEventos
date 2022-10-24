@@ -24,7 +24,7 @@ const registrar = async ( req, res ) => {
         name,
         token: plannerSave.token
     })
-
+    console.log(plannerSave)
     res.json({msj : plannerSave})
    } catch (error) {
     console.log(error)

@@ -12,7 +12,7 @@ function Formulario() {
         telefono:'',
         email: '',
         total: '',
-        _id: null
+        // _id: null
     });
 
     useEffect(() => {

@@ -5,7 +5,6 @@ function Cliente({ cliente }) {
 
   const { setEdicion, eliminarCliente } = useClientes();
 
-
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
       <p className="font-bold uppercase text-indigo-700">Nombre: 
