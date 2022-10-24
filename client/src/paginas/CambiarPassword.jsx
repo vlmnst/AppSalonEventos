@@ -40,6 +40,10 @@ function CambiarPassword() {
     const respuesta = await guardarPassword(input)
     console.log(respuesta)
     setAlerta(respuesta)
+    setInput({
+      passwordActual:'',
+      passwordNuevo: ''
+    })
     return
 
   }
