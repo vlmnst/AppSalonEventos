@@ -13,7 +13,7 @@ import CambiarPassword from "./paginas/CambiarPassword";
 import { AuthProvider } from "./context/AuthPovider";
 import { ClientesProvider } from "./context/ClientesProvider"
 
-function App() {
+function App () {
 
   return (
   <BrowserRouter>
@@ -43,4 +43,4 @@ function App() {
   )
 }
 
-export default App
+export default App 
